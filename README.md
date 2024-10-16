@@ -305,38 +305,38 @@ services:
 
     - Создайте docker-compose.yml файл с Django приложением (образ которого должен собираться из Dockerfile который вы сделали), условным frontend и postgres где:
         
-        ```
-        1. frontend на порте 3000, билдится из абстрактной директории frontend, запускается командой "run 0.0.0.0"
-        2. Используется postgres 16 на базе alpine linux 
-        3. Контейнеры между собой общаются, балансер не нужен
-        ```
+```
+1. frontend на порте 3000, билдится из абстрактной директории frontend, запускается командой "run 0.0.0.0"
+2. Используется postgres 16 на базе alpine linux 
+3. Контейнеры между собой общаются, балансер не нужен
+```
 
-        В корне проекта создаем файл `docker-compose.yml` со следующим содержимым:
+В корне проекта создаем файл `docker-compose.yml` со следующим содержимым:
 
-        ```
-        version: '3'
-        services:
-        web:
-            build: ./frontend
-            command: python manage.py runserver 0.0.0.0:3000
-            volumes:
-              - ./web_django
-            ports:
-             - '3000:3000'
-            depends_on:
-              - db
-        db:
-            image: postgres:16-alpine
-            ports:
-              - '5433:5433'
-            environment:
-            POSTGRES_DB: 'db_django'
-            POSTGRES_USER: 'postgres'
-            POSTGRES_PASSWORD: 'password'
-            restart: always
-            volumes:
-              - ./db_django:/var/lib/postgresql/data/pgdata
-        ```
+```
+version: '3'
+services:
+web:
+    build: ./frontend
+    command: python manage.py runserver 0.0.0.0:3000
+    volumes:
+        - ./web_django
+    ports:
+        - '3000:3000'
+    depends_on:
+        - db
+db:
+    image: postgres:16-alpine
+    ports:
+        - '5433:5433'
+    environment:
+    POSTGRES_DB: 'db_django'
+    POSTGRES_USER: 'postgres'
+    POSTGRES_PASSWORD: 'password'
+    restart: always
+    volumes:
+        - ./db_django:/var/lib/postgresql/data/pgdata
+```
 
 
 
