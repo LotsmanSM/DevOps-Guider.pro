@@ -258,7 +258,8 @@ services:
 
 
     - Как можно изменить файл, чтобы добавить том для хранения данных PostgreSQL?
-        ![Untitled](img/Untitled.webp)
+
+![Untitled](img/Untitled.webp)
 
         Нужно дописать строчку, в которой volume app-db-data монтируется в директорию /var/lib/postgresql/data/pgdata внутри контейнера службы db. И для среды db определить дополнительные переменные окружения: PGDATA, POSTGRES_DB. Приблизительный текст файла `docker-compose.yml` находиться ниже.
 
